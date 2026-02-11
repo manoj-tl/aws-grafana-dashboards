@@ -30,7 +30,7 @@ aws-grafana-dashboards/
 
 ## Features
 
-- **Multi-Region Support** - All dashboards include region selector
+- **AWS GovCloud Support** - Configured for us-gov-west-1 (default) and us-gov-east-1
 - **CloudWatch Data Source** - Uses native CloudWatch metrics
 - **Drill-Down Navigation** - Links between summary and detailed dashboards
 - **Best Practice Time Ranges**:
@@ -202,7 +202,7 @@ All dashboards use the following template variables:
 | Variable | Description |
 |----------|-------------|
 | `datasource` | CloudWatch data source selector |
-| `region` | AWS region selector (populated from CloudWatch) |
+| `region` | AWS GovCloud region (us-gov-west-1 default, us-gov-east-1) |
 | `function` | Lambda function name (detailed dashboard only) |
 | `queue` | SQS queue name (detailed dashboard only) |
 | `topic` | SNS topic name (detailed dashboard only) |

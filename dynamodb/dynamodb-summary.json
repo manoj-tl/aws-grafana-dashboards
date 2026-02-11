@@ -1454,24 +1454,31 @@
         "type": "datasource"
       },
       {
-        "current": {},
-        "datasource": {
-          "type": "cloudwatch",
-          "uid": "${datasource}"
+        "current": {
+          "selected": true,
+          "text": "us-gov-west-1",
+          "value": "us-gov-west-1"
         },
-        "definition": "regions()",
         "hide": 0,
         "includeAll": false,
         "label": "Region",
         "multi": false,
         "name": "region",
-        "options": [],
-        "query": "regions()",
-        "refresh": 1,
-        "regex": "",
+        "options": [
+          {
+            "selected": true,
+            "text": "us-gov-west-1",
+            "value": "us-gov-west-1"
+          },
+          {
+            "selected": false,
+            "text": "us-gov-east-1",
+            "value": "us-gov-east-1"
+          }
+        ],
+        "query": "us-gov-west-1,us-gov-east-1",
         "skipUrlSync": false,
-        "sort": 1,
-        "type": "query"
+        "type": "custom"
       }
     ]
   },
