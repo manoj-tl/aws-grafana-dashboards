@@ -15,12 +15,35 @@
       }
     ]
   },
-  "description": "AWS SNS Summary Dashboard - Overall health and performance across all SNS topics",
+  "description": "AWS Messaging Flow - End-to-end view of SNS publishing, SQS delivery, delayed messages, and Dead Letter Queues",
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
   "id": null,
   "links": [
+    {
+      "asDropdown": true,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": true,
+      "tags": [],
+      "targetBlank": true,
+      "title": "Related Dashboards",
+      "type": "dashboards",
+      "url": ""
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": true,
+      "tags": [],
+      "targetBlank": true,
+      "title": "SNS Summary",
+      "tooltip": "Go to SNS Summary Dashboard",
+      "type": "link",
+      "url": "/d/sns-summary/sns-summary"
+    },
     {
       "asDropdown": false,
       "icon": "external link",
@@ -32,6 +55,30 @@
       "tooltip": "Go to SNS Detailed Dashboard",
       "type": "link",
       "url": "/d/sns-detailed/sns-detailed"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": true,
+      "tags": [],
+      "targetBlank": true,
+      "title": "SQS Summary",
+      "tooltip": "Go to SQS Summary Dashboard",
+      "type": "link",
+      "url": "/d/sqs-summary/sqs-summary"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": true,
+      "tags": [],
+      "targetBlank": true,
+      "title": "SQS Detailed",
+      "tooltip": "Go to SQS Detailed Dashboard",
+      "type": "link",
+      "url": "/d/sqs-detailed/sqs-detailed"
     }
   ],
   "liveNow": false,
@@ -116,7 +163,7 @@
           "statistic": "Sum"
         }
       ],
-      "title": "Messages Published",
+      "title": "SNS Published",
       "type": "stat"
     },
     {
@@ -186,7 +233,7 @@
           "statistic": "Sum"
         }
       ],
-      "title": "Notifications Delivered",
+      "title": "SNS Delivered",
       "type": "stat"
     },
     {
@@ -264,139 +311,7 @@
           "statistic": "Sum"
         }
       ],
-      "title": "Notifications Failed",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "cloudwatch",
-        "uid": "${datasource}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "decimals": 2,
-          "mappings": [
-            {
-              "options": {
-                "match": "null",
-                "result": {
-                  "color": "text",
-                  "text": "N/A"
-                }
-              },
-              "type": "special"
-            }
-          ],
-          "noValue": "N/A",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "yellow",
-                "value": 95
-              },
-              {
-                "color": "green",
-                "value": 99
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 12,
-        "y": 1
-      },
-      "id": 4,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": ["mean"],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "10.0.0",
-      "targets": [
-        {
-          "alias": "",
-          "datasource": {
-            "type": "cloudwatch",
-            "uid": "${datasource}"
-          },
-          "dimensions": {},
-          "expression": "100 * m1 / (m1 + m2)",
-          "id": "",
-          "matchExact": true,
-          "metricEditorMode": 1,
-          "metricName": "",
-          "metricQueryType": 1,
-          "namespace": "AWS/SNS",
-          "period": "",
-          "queryMode": "Metrics",
-          "refId": "A",
-          "region": "${region}",
-          "sqlExpression": ""
-        },
-        {
-          "datasource": {
-            "type": "cloudwatch",
-            "uid": "${datasource}"
-          },
-          "dimensions": {},
-          "expression": "",
-          "hide": true,
-          "id": "m1",
-          "matchExact": true,
-          "metricEditorMode": 0,
-          "metricName": "NumberOfNotificationsDelivered",
-          "metricQueryType": 0,
-          "namespace": "AWS/SNS",
-          "period": "",
-          "queryMode": "Metrics",
-          "refId": "m1",
-          "region": "${region}",
-          "sqlExpression": "",
-          "statistic": "Sum"
-        },
-        {
-          "datasource": {
-            "type": "cloudwatch",
-            "uid": "${datasource}"
-          },
-          "dimensions": {},
-          "expression": "",
-          "hide": true,
-          "id": "m2",
-          "matchExact": true,
-          "metricEditorMode": 0,
-          "metricName": "NumberOfNotificationsFailed",
-          "metricQueryType": 0,
-          "namespace": "AWS/SNS",
-          "period": "",
-          "queryMode": "Metrics",
-          "refId": "m2",
-          "region": "${region}",
-          "sqlExpression": "",
-          "statistic": "Sum"
-        }
-      ],
-      "title": "Delivery Success Rate",
+      "title": "SNS Failed",
       "type": "stat"
     },
     {
@@ -416,6 +331,84 @@
               {
                 "color": "green",
                 "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 12,
+        "y": 1
+      },
+      "id": 4,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["sum"],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.0.0",
+      "targets": [
+        {
+          "alias": "",
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "${datasource}"
+          },
+          "dimensions": {},
+          "expression": "",
+          "id": "",
+          "matchExact": true,
+          "metricEditorMode": 0,
+          "metricName": "NumberOfMessagesSent",
+          "metricQueryType": 0,
+          "namespace": "AWS/SQS",
+          "period": "",
+          "queryMode": "Metrics",
+          "refId": "A",
+          "region": "${region}",
+          "sqlExpression": "",
+          "statistic": "Sum"
+        }
+      ],
+      "title": "SQS Messages In",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 10
+              },
+              {
+                "color": "red",
+                "value": 100
               }
             ]
           },
@@ -436,7 +429,7 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["sum"],
+          "calcs": ["max"],
           "fields": "",
           "values": false
         },
@@ -455,18 +448,18 @@
           "id": "",
           "matchExact": true,
           "metricEditorMode": 0,
-          "metricName": "NumberOfNotificationsFilteredOut",
+          "metricName": "ApproximateNumberOfMessagesDelayed",
           "metricQueryType": 0,
-          "namespace": "AWS/SNS",
+          "namespace": "AWS/SQS",
           "period": "",
           "queryMode": "Metrics",
           "refId": "A",
           "region": "${region}",
           "sqlExpression": "",
-          "statistic": "Sum"
+          "statistic": "Maximum"
         }
       ],
-      "title": "Filtered Out",
+      "title": "SQS Delayed",
       "type": "stat"
     },
     {
@@ -486,10 +479,18 @@
               {
                 "color": "green",
                 "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 1
+              },
+              {
+                "color": "red",
+                "value": 10
               }
             ]
           },
-          "unit": "decbytes"
+          "unit": "short"
         },
         "overrides": []
       },
@@ -506,7 +507,7 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["sum"],
+          "calcs": ["max"],
           "fields": "",
           "values": false
         },
@@ -520,23 +521,25 @@
             "type": "cloudwatch",
             "uid": "${datasource}"
           },
-          "dimensions": {},
+          "dimensions": {
+            "QueueName": "*"
+          },
           "expression": "",
           "id": "",
           "matchExact": true,
           "metricEditorMode": 0,
-          "metricName": "PublishSize",
+          "metricName": "ApproximateNumberOfMessagesVisible",
           "metricQueryType": 0,
-          "namespace": "AWS/SNS",
+          "namespace": "AWS/SQS",
           "period": "",
           "queryMode": "Metrics",
           "refId": "A",
           "region": "${region}",
           "sqlExpression": "",
-          "statistic": "Sum"
+          "statistic": "Maximum"
         }
       ],
-      "title": "Total Publish Size",
+      "title": "DLQ Depth (All Queues)",
       "type": "stat"
     },
     {
@@ -549,109 +552,8 @@
       },
       "id": 101,
       "panels": [],
-      "title": "Message Trends",
+      "title": "SNS Delivery",
       "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "cloudwatch",
-        "uid": "${datasource}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "smooth",
-            "lineWidth": 2,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 6
-      },
-      "id": 7,
-      "options": {
-        "legend": {
-          "calcs": ["sum", "mean"],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      },
-      "pluginVersion": "10.0.0",
-      "targets": [
-        {
-          "alias": "Messages Published",
-          "datasource": {
-            "type": "cloudwatch",
-            "uid": "${datasource}"
-          },
-          "dimensions": {},
-          "expression": "",
-          "id": "",
-          "matchExact": true,
-          "metricEditorMode": 0,
-          "metricName": "NumberOfMessagesPublished",
-          "metricQueryType": 0,
-          "namespace": "AWS/SNS",
-          "period": "",
-          "queryMode": "Metrics",
-          "refId": "A",
-          "region": "${region}",
-          "sqlExpression": "",
-          "statistic": "Sum"
-        }
-      ],
-      "title": "Messages Published Over Time",
-      "type": "timeseries"
     },
     {
       "datasource": {
@@ -736,16 +638,31 @@
                 }
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Published"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
           }
         ]
       },
       "gridPos": {
         "h": 8,
         "w": 12,
-        "x": 12,
+        "x": 0,
         "y": 6
       },
-      "id": 8,
+      "id": 7,
       "options": {
         "legend": {
           "calcs": ["sum", "mean"],
@@ -761,7 +678,7 @@
       "pluginVersion": "10.0.0",
       "targets": [
         {
-          "alias": "Delivered",
+          "alias": "Published",
           "datasource": {
             "type": "cloudwatch",
             "uid": "${datasource}"
@@ -771,12 +688,34 @@
           "id": "",
           "matchExact": true,
           "metricEditorMode": 0,
-          "metricName": "NumberOfNotificationsDelivered",
+          "metricName": "NumberOfMessagesPublished",
           "metricQueryType": 0,
           "namespace": "AWS/SNS",
           "period": "",
           "queryMode": "Metrics",
           "refId": "A",
+          "region": "${region}",
+          "sqlExpression": "",
+          "statistic": "Sum"
+        },
+        {
+          "alias": "Delivered",
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "${datasource}"
+          },
+          "dimensions": {},
+          "expression": "",
+          "hide": false,
+          "id": "",
+          "matchExact": true,
+          "metricEditorMode": 0,
+          "metricName": "NumberOfNotificationsDelivered",
+          "metricQueryType": 0,
+          "namespace": "AWS/SNS",
+          "period": "",
+          "queryMode": "Metrics",
+          "refId": "B",
           "region": "${region}",
           "sqlExpression": "",
           "statistic": "Sum"
@@ -798,13 +737,13 @@
           "namespace": "AWS/SNS",
           "period": "",
           "queryMode": "Metrics",
-          "refId": "B",
+          "refId": "C",
           "region": "${region}",
           "sqlExpression": "",
           "statistic": "Sum"
         }
       ],
-      "title": "Notifications Delivered vs Failed",
+      "title": "SNS - Published / Delivered / Failed",
       "type": "timeseries"
     },
     {
@@ -845,7 +784,7 @@
               "mode": "none"
             },
             "thresholdsStyle": {
-              "mode": "off"
+              "mode": "line"
             }
           },
           "mappings": [],
@@ -853,126 +792,49 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "red",
                 "value": null
-              }
-            ]
-          },
-          "unit": "decbytes"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 14
-      },
-      "id": 9,
-      "options": {
-        "legend": {
-          "calcs": ["sum", "mean"],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      },
-      "pluginVersion": "10.0.0",
-      "targets": [
-        {
-          "alias": "Publish Size",
-          "datasource": {
-            "type": "cloudwatch",
-            "uid": "${datasource}"
-          },
-          "dimensions": {},
-          "expression": "",
-          "id": "",
-          "matchExact": true,
-          "metricEditorMode": 0,
-          "metricName": "PublishSize",
-          "metricQueryType": 0,
-          "namespace": "AWS/SNS",
-          "period": "",
-          "queryMode": "Metrics",
-          "refId": "A",
-          "region": "${region}",
-          "sqlExpression": "",
-          "statistic": "Average"
-        }
-      ],
-      "title": "Average Message Size Over Time",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "cloudwatch",
-        "uid": "${datasource}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "smooth",
-            "lineWidth": 2,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
+              },
+              {
+                "color": "yellow",
+                "value": 95
+              },
               {
                 "color": "green",
-                "value": null
+                "value": 99
               }
             ]
           },
-          "unit": "short"
+          "unit": "percent"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Success Rate"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 14
+        "y": 6
       },
-      "id": 10,
+      "id": 8,
       "options": {
         "legend": {
-          "calcs": ["sum", "mean"],
+          "calcs": ["mean", "min"],
           "displayMode": "table",
           "placement": "bottom",
           "showLegend": true
@@ -985,28 +847,69 @@
       "pluginVersion": "10.0.0",
       "targets": [
         {
-          "alias": "Filtered Out",
+          "alias": "Success Rate",
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "${datasource}"
+          },
+          "dimensions": {},
+          "expression": "100 * m1 / (m1 + m2)",
+          "id": "",
+          "matchExact": true,
+          "metricEditorMode": 1,
+          "metricName": "",
+          "metricQueryType": 1,
+          "namespace": "AWS/SNS",
+          "period": "",
+          "queryMode": "Metrics",
+          "refId": "A",
+          "region": "${region}",
+          "sqlExpression": ""
+        },
+        {
           "datasource": {
             "type": "cloudwatch",
             "uid": "${datasource}"
           },
           "dimensions": {},
           "expression": "",
-          "id": "",
+          "hide": true,
+          "id": "m1",
           "matchExact": true,
           "metricEditorMode": 0,
-          "metricName": "NumberOfNotificationsFilteredOut",
+          "metricName": "NumberOfNotificationsDelivered",
           "metricQueryType": 0,
           "namespace": "AWS/SNS",
           "period": "",
           "queryMode": "Metrics",
-          "refId": "A",
+          "refId": "m1",
+          "region": "${region}",
+          "sqlExpression": "",
+          "statistic": "Sum"
+        },
+        {
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "${datasource}"
+          },
+          "dimensions": {},
+          "expression": "",
+          "hide": true,
+          "id": "m2",
+          "matchExact": true,
+          "metricEditorMode": 0,
+          "metricName": "NumberOfNotificationsFailed",
+          "metricQueryType": 0,
+          "namespace": "AWS/SNS",
+          "period": "",
+          "queryMode": "Metrics",
+          "refId": "m2",
           "region": "${region}",
           "sqlExpression": "",
           "statistic": "Sum"
         }
       ],
-      "title": "Notifications Filtered Out Over Time",
+      "title": "SNS Delivery Success Rate",
       "type": "timeseries"
     },
     {
@@ -1015,11 +918,11 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 22
+        "y": 14
       },
       "id": 102,
       "panels": [],
-      "title": "Top Topics",
+      "title": "SQS Queue Health",
       "type": "row"
     },
     {
@@ -1038,8 +941,8 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
-            "drawStyle": "bars",
-            "fillOpacity": 100,
+            "drawStyle": "line",
+            "fillOpacity": 10,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
@@ -1047,8 +950,8 @@
               "viz": false
             },
             "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
             "pointSize": 5,
             "scaleDistribution": {
               "type": "linear"
@@ -1075,23 +978,67 @@
           },
           "unit": "short"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Sent"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Received"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Deleted"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 23
+        "y": 15
       },
-      "id": 11,
+      "id": 9,
       "options": {
         "legend": {
-          "calcs": ["sum"],
+          "calcs": ["sum", "mean"],
           "displayMode": "table",
           "placement": "bottom",
-          "showLegend": true,
-          "sortBy": "Total",
-          "sortDesc": true
+          "showLegend": true
         },
         "tooltip": {
           "mode": "multi",
@@ -1101,30 +1048,72 @@
       "pluginVersion": "10.0.0",
       "targets": [
         {
-          "alias": "{{TopicName}}",
+          "alias": "Sent",
           "datasource": {
             "type": "cloudwatch",
             "uid": "${datasource}"
           },
-          "dimensions": {
-            "TopicName": "*"
-          },
+          "dimensions": {},
           "expression": "",
           "id": "",
           "matchExact": true,
           "metricEditorMode": 0,
-          "metricName": "NumberOfMessagesPublished",
+          "metricName": "NumberOfMessagesSent",
           "metricQueryType": 0,
-          "namespace": "AWS/SNS",
+          "namespace": "AWS/SQS",
           "period": "",
           "queryMode": "Metrics",
           "refId": "A",
           "region": "${region}",
           "sqlExpression": "",
           "statistic": "Sum"
+        },
+        {
+          "alias": "Received",
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "${datasource}"
+          },
+          "dimensions": {},
+          "expression": "",
+          "hide": false,
+          "id": "",
+          "matchExact": true,
+          "metricEditorMode": 0,
+          "metricName": "NumberOfMessagesReceived",
+          "metricQueryType": 0,
+          "namespace": "AWS/SQS",
+          "period": "",
+          "queryMode": "Metrics",
+          "refId": "B",
+          "region": "${region}",
+          "sqlExpression": "",
+          "statistic": "Sum"
+        },
+        {
+          "alias": "Deleted",
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "${datasource}"
+          },
+          "dimensions": {},
+          "expression": "",
+          "hide": false,
+          "id": "",
+          "matchExact": true,
+          "metricEditorMode": 0,
+          "metricName": "NumberOfMessagesDeleted",
+          "metricQueryType": 0,
+          "namespace": "AWS/SQS",
+          "period": "",
+          "queryMode": "Metrics",
+          "refId": "C",
+          "region": "${region}",
+          "sqlExpression": "",
+          "statistic": "Sum"
         }
       ],
-      "title": "Top Topics by Messages Published",
+      "title": "SQS Message Flow",
       "type": "timeseries"
     },
     {
@@ -1143,8 +1132,8 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
-            "drawStyle": "bars",
-            "fillOpacity": 100,
+            "drawStyle": "line",
+            "fillOpacity": 10,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
@@ -1152,8 +1141,8 @@
               "viz": false
             },
             "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
             "pointSize": 5,
             "scaleDistribution": {
               "type": "linear"
@@ -1165,7 +1154,7 @@
               "mode": "none"
             },
             "thresholdsStyle": {
-              "mode": "off"
+              "mode": "line"
             }
           },
           "mappings": [],
@@ -1175,6 +1164,14 @@
               {
                 "color": "green",
                 "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 10
+              },
+              {
+                "color": "red",
+                "value": 100
               }
             ]
           },
@@ -1186,16 +1183,16 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 23
+        "y": 15
       },
-      "id": 12,
+      "id": 10,
       "options": {
         "legend": {
-          "calcs": ["sum"],
+          "calcs": ["max", "mean"],
           "displayMode": "table",
           "placement": "bottom",
           "showLegend": true,
-          "sortBy": "Total",
+          "sortBy": "Max",
           "sortDesc": true
         },
         "tooltip": {
@@ -1206,30 +1203,30 @@
       "pluginVersion": "10.0.0",
       "targets": [
         {
-          "alias": "{{TopicName}}",
+          "alias": "{{QueueName}}",
           "datasource": {
             "type": "cloudwatch",
             "uid": "${datasource}"
           },
           "dimensions": {
-            "TopicName": "*"
+            "QueueName": "*"
           },
           "expression": "",
           "id": "",
           "matchExact": true,
           "metricEditorMode": 0,
-          "metricName": "NumberOfNotificationsDelivered",
+          "metricName": "ApproximateNumberOfMessagesDelayed",
           "metricQueryType": 0,
-          "namespace": "AWS/SNS",
+          "namespace": "AWS/SQS",
           "period": "",
           "queryMode": "Metrics",
           "refId": "A",
           "region": "${region}",
           "sqlExpression": "",
-          "statistic": "Sum"
+          "statistic": "Maximum"
         }
       ],
-      "title": "Top Topics by Notifications Delivered",
+      "title": "SQS Delayed Messages by Queue",
       "type": "timeseries"
     },
     {
@@ -1248,8 +1245,8 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
-            "drawStyle": "bars",
-            "fillOpacity": 100,
+            "drawStyle": "line",
+            "fillOpacity": 10,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
@@ -1257,8 +1254,8 @@
               "viz": false
             },
             "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
             "pointSize": 5,
             "scaleDistribution": {
               "type": "linear"
@@ -1270,7 +1267,7 @@
               "mode": "none"
             },
             "thresholdsStyle": {
-              "mode": "off"
+              "mode": "line"
             }
           },
           "mappings": [],
@@ -1280,6 +1277,14 @@
               {
                 "color": "green",
                 "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 100
+              },
+              {
+                "color": "red",
+                "value": 1000
               }
             ]
           },
@@ -1291,12 +1296,359 @@
         "h": 8,
         "w": 8,
         "x": 16,
+        "y": 15
+      },
+      "id": 11,
+      "options": {
+        "legend": {
+          "calcs": ["max", "mean"],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Max",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "10.0.0",
+      "targets": [
+        {
+          "alias": "{{QueueName}}",
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "${datasource}"
+          },
+          "dimensions": {
+            "QueueName": "*"
+          },
+          "expression": "",
+          "id": "",
+          "matchExact": true,
+          "metricEditorMode": 0,
+          "metricName": "ApproximateNumberOfMessagesVisible",
+          "metricQueryType": 0,
+          "namespace": "AWS/SQS",
+          "period": "",
+          "queryMode": "Metrics",
+          "refId": "A",
+          "region": "${region}",
+          "sqlExpression": "",
+          "statistic": "Maximum"
+        }
+      ],
+      "title": "SQS Queue Backlog by Queue",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
         "y": 23
+      },
+      "id": 103,
+      "panels": [],
+      "title": "Dead Letter Queues (DLQ)",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "${datasource}"
+      },
+      "description": "Messages sitting in DLQ queues. Any non-zero value indicates failed message processing.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 15,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "line"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 24
+      },
+      "id": 12,
+      "options": {
+        "legend": {
+          "calcs": ["max", "lastNotNull"],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Max",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "10.0.0",
+      "targets": [
+        {
+          "alias": "{{QueueName}}",
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "${datasource}"
+          },
+          "dimensions": {
+            "QueueName": "*"
+          },
+          "expression": "",
+          "id": "",
+          "matchExact": true,
+          "metricEditorMode": 0,
+          "metricName": "ApproximateNumberOfMessagesVisible",
+          "metricQueryType": 0,
+          "namespace": "AWS/SQS",
+          "period": "",
+          "queryMode": "Metrics",
+          "refId": "A",
+          "region": "${region}",
+          "sqlExpression": "",
+          "statistic": "Maximum"
+        }
+      ],
+      "title": "DLQ - Message Count by Queue",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "${datasource}"
+      },
+      "description": "Age of the oldest message in DLQ queues. High values indicate messages stuck without reprocessing.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "line"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 3600000
+              },
+              {
+                "color": "red",
+                "value": 86400000
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 24
       },
       "id": 13,
       "options": {
         "legend": {
-          "calcs": ["sum"],
+          "calcs": ["max", "mean"],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Max",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "10.0.0",
+      "targets": [
+        {
+          "alias": "{{QueueName}}",
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "${datasource}"
+          },
+          "dimensions": {
+            "QueueName": "*"
+          },
+          "expression": "",
+          "id": "",
+          "matchExact": true,
+          "metricEditorMode": 0,
+          "metricName": "ApproximateAgeOfOldestMessage",
+          "metricQueryType": 0,
+          "namespace": "AWS/SQS",
+          "period": "",
+          "queryMode": "Metrics",
+          "refId": "A",
+          "region": "${region}",
+          "sqlExpression": "",
+          "statistic": "Maximum"
+        }
+      ],
+      "title": "DLQ - Age of Oldest Message",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "${datasource}"
+      },
+      "description": "New messages arriving in DLQ queues. Spikes indicate active failures in upstream processing.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "line"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 24
+      },
+      "id": 14,
+      "options": {
+        "legend": {
+          "calcs": ["sum", "max"],
           "displayMode": "table",
           "placement": "bottom",
           "showLegend": true,
@@ -1311,21 +1663,21 @@
       "pluginVersion": "10.0.0",
       "targets": [
         {
-          "alias": "{{TopicName}}",
+          "alias": "{{QueueName}}",
           "datasource": {
             "type": "cloudwatch",
             "uid": "${datasource}"
           },
           "dimensions": {
-            "TopicName": "*"
+            "QueueName": "*"
           },
           "expression": "",
           "id": "",
           "matchExact": true,
           "metricEditorMode": 0,
-          "metricName": "NumberOfNotificationsFailed",
+          "metricName": "NumberOfMessagesSent",
           "metricQueryType": 0,
-          "namespace": "AWS/SNS",
+          "namespace": "AWS/SQS",
           "period": "",
           "queryMode": "Metrics",
           "refId": "A",
@@ -1334,14 +1686,14 @@
           "statistic": "Sum"
         }
       ],
-      "title": "Top Topics by Failures",
+      "title": "DLQ - New Messages Arriving",
       "type": "timeseries"
     }
   ],
   "refresh": "1m",
   "schemaVersion": 38,
   "style": "dark",
-  "tags": ["aws", "sns", "messaging", "summary"],
+  "tags": ["aws", "sns", "sqs", "dlq", "messaging"],
   "templating": {
     "list": [
       {
@@ -1396,8 +1748,8 @@
     "refresh_intervals": ["5s", "10s", "30s", "1m", "5m", "15m", "30m", "1h", "2h", "1d"]
   },
   "timezone": "browser",
-  "title": "AWS SNS - Summary",
-  "uid": "sns-summary",
+  "title": "AWS Messaging Flow - SNS / SQS / DLQ",
+  "uid": "messaging-flow",
   "version": 1,
   "weekStart": ""
 }

@@ -4,10 +4,11 @@ A comprehensive collection of Grafana dashboards for monitoring AWS services usi
 
 ## Overview
 
-This repository contains 8 production-ready Grafana dashboards organized into two categories:
+This repository contains 9 production-ready Grafana dashboards organized into three categories:
 
 1. **Summary Dashboards** - High-level health overview across all resources
 2. **Detailed Dashboards** - Deep dive into individual resource metrics
+3. **Flow Dashboards** - End-to-end cross-service views
 
 ## Dashboard Structure
 
@@ -25,6 +26,8 @@ aws-grafana-dashboards/
 ├── dynamodb/
 │   ├── dynamodb-summary.json    # Overall DynamoDB health
 │   └── dynamodb-detailed.json   # Per-table metrics
+├── messaging/
+│   └── messaging-flow.json      # SNS → SQS → DLQ message flow
 └── README.md
 ```
 
@@ -98,6 +101,17 @@ aws-grafana-dashboards/
 - SuccessfulRequestLatency (avg, p90, p99)
 - SystemErrors/UserErrors
 - ReplicationLatency (Global Tables)
+
+### Messaging Flow (SNS → SQS → DLQ)
+
+| Dashboard | UID | Description |
+|-----------|-----|-------------|
+| Messaging Flow | `messaging-flow` | End-to-end view: SNS delivery success/failure, SQS queue backlog & delayed messages, DLQ depth & age |
+
+**Key Metrics:**
+- SNS: NumberOfMessagesPublished, NumberOfNotificationsDelivered, NumberOfNotificationsFailed, Delivery Success Rate
+- SQS: NumberOfMessagesSent/Received/Deleted, ApproximateNumberOfMessagesDelayed, ApproximateNumberOfMessagesVisible
+- DLQ: ApproximateNumberOfMessagesVisible, ApproximateAgeOfOldestMessage, NumberOfMessagesSent (new failures arriving)
 
 ## Installation
 
